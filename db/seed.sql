@@ -1,3 +1,5 @@
+\c chores_dev;
+
 INSERT INTO chores (name, description, due_date, status, points)
 VALUES
   ('Clean Bedroom', 'Tidy up and organize the bedroom.', '2023-05-24', 'Pending', 20),
