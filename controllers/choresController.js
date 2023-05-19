@@ -7,7 +7,7 @@ const {
   deleteChore,
   updateChore,
 } = require("../queries/chores");
-const { checkName } = require("../validations/checkChores");
+// const { checkName } = require("../validations/checkChores");
 
 //GET ROUTE
 chores.get("/", async (req, res) => {
@@ -28,7 +28,7 @@ chores.get("/:id", async (req, res) => {
 });
 
 //CREATE ROUTE
-chores.post("/", checkName, async (req, res) => {
+chores.post("/", async (req, res) => {
   const newChore = req.body;
 
   if (!newChore.calorie) {
@@ -42,6 +42,7 @@ chores.post("/", checkName, async (req, res) => {
     }
   }
 });
+//TODO: add checkNAME
 
 //DELETE ROUTE
 chores.delete("/:id", async (req, res) => {
@@ -60,7 +61,7 @@ chores.delete("/:id", async (req, res) => {
 });
 
 //UPDATE ROUTE
-chores.put("/:id", checkName, async (req, res) => {
+chores.put("/:id", async (req, res) => {
   const { id } = req.params;
   const choreToUpdate = req.body;
   console.log(id, req.body)
@@ -71,8 +72,8 @@ chores.put("/:id", checkName, async (req, res) => {
       res.status(404).json({ error: "Chore not found" });
       return;
     }
+//TODO: add checkName
 
-    // Check if any changes were made to the chore object
     const isModified = Object.keys(choreToUpdate).some(
       (key) => choreToUpdate[key] !== existingChore[key]
     );
