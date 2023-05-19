@@ -9,13 +9,13 @@ const {
 } = require("../queries/chores");
 // const { checkName } = require("../validations/checkChores");
 
-//GET ROUTE
+//GET ROUTE - INDEX
 chores.get("/", async (req, res) => {
   const allChores = await getAllChores();
   res.status(200).json(allChores);
 });
 
-//GET ONE ROUTE
+//GET ONE ROUTE - Single/ONE
 chores.get("/:id", async (req, res) => {
   const { id } = req.params;
   const chore = await getAChore(id);
@@ -31,8 +31,8 @@ chores.get("/:id", async (req, res) => {
 chores.post("/", async (req, res) => {
   const newChore = req.body;
 
-  if (!newChore.calorie) {
-    res.status(400).json({ error: "Calorie is missing" });
+  if (!newChore.description) {
+    res.status(400).json({ error: "Description field is missing" });
   } else {
     try {
       const addedChore = await createChore(newChore);
@@ -42,6 +42,7 @@ chores.post("/", async (req, res) => {
     }
   }
 });
+
 //TODO: add checkNAME
 
 //DELETE ROUTE
