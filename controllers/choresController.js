@@ -2,93 +2,71 @@ const express = require("express");
 const chores = express.Router();
 const {
   getAllChores,
-  getAChore,
+  getChore,
   createChore,
   deleteChore,
   updateChore,
 } = require("../queries/chores");
 // const { checkName } = require("../validations/checkChores");
 
-//GET ROUTE - INDEX
-chores.get("/", async (req, res) => {
+//INDEX
+chores.get('/', async (req, res) => {
   const allChores = await getAllChores();
-  res.status(200).json(allChores);
+
+  if (allChores) {
+    res.status(202).json(allChores);
+  } else {
+    res.status(500).json({ error: 'Server Error' })
+  }
 });
 
-//GET ONE ROUTE - Single/ONE
-chores.get("/:id", async (req, res) => {
+//SINGLE CHORE
+chores.get('/:id', async (req, res) => {
   const { id } = req.params;
-  const chore = await getAChore(id);
+  const chore = await getChore(id)
 
   if (chore) {
     res.status(200).json(chore);
   } else {
-    res.status(404).json({ error: "Chore not found" });
+    res.status(500).json({ error: 'Server Error' })
   }
-});
+})
 
-//CREATE ROUTE
-chores.post("/", async (req, res) => {
+//CREATE/NEW CHORE Route
+chores.post('/', async (req, res) => {
   const newChore = req.body;
-
-  if (!newChore.description) {
-    res.status(400).json({ error: "Description field is missing" });
-  } else {
-    try {
-      const addedChore = await createChore(newChore);
-      res.status(200).json(addedChore);
-    } catch (error) {
-      res.status(400).json({ error: error });
-    }
+  try {
+    const addedChore = await createChore(newChore)
+    res.status(202).json(addedChore)
+  } catch (error) {
+    res.status(400).json({ error: error })
   }
-});
+})
 
-//TODO: add checkNAME
-
-//DELETE ROUTE
-chores.delete("/:id", async (req, res) => {
+//DELETE CHORE
+chores.delete('/:id', async (req, res) => {
   const { id } = req.params;
 
   try {
     const deletedChore = await deleteChore(id);
-    if (deletedChore.id) {
-      res.status(200).json(deletedChore);
-    } else {
-      throw new Error("A chore with that Id does not exist");
-    }
+    res.status(200).json(deletedChore)
   } catch (error) {
-    res.status(404).json({ error: error });
+    res.status(400).json({ error: error })
   }
 });
 
-//UPDATE ROUTE
-chores.put("/:id", async (req, res) => {
+//UPDATE/EDIT CHORE
+chores.put('/:id', async (req, res) => {
   const { id } = req.params;
-  const choreToUpdate = req.body;
-  console.log(id, req.body)
+  const { body } = req;
+
   try {
-    const existingChore = await getAChore(id);
-
-    if (!existingChore) {
-      res.status(404).json({ error: "Chore not found" });
-      return;
-    }
-    //TODO: add checkName
-
-    const isModified = Object.keys(choreToUpdate).some(
-      (key) => choreToUpdate[key] !== existingChore[key]
-    );
-
-    if (!isModified) {
-      res.status(400).json({ error: "No changes detected in the chore object" });
-      return;
-    }
-
-    const updatedChore = await updateChore(id, choreToUpdate);
+    const updatedChore = await updateChore(id, body);
     res.status(200).json(updatedChore);
   } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
+    res.status(400).json({ error: error });
+  };
 });
+
 
 module.exports = chores;
