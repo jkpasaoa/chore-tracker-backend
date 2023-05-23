@@ -11,9 +11,9 @@ CREATE TABLE chores (
   id SERIAL PRIMARY KEY,
   name TEXT NOT NULL,
   description TEXT,
-  due_date DATE,
+  due_date VARCHAR(30),
   status TEXT NOT NULL,
-  points INT NOT NULL,
-  created_at TIMESTAMP DEFAULT NOW(),
-  updated_at TIMESTAMP DEFAULT NOW()
+  points INT CHECK (points >= 1 AND points <= 5) NOT NULL,
+  priority VARCHAR(30),
+  category VARCHAR(30)
 );

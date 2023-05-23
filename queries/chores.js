@@ -23,7 +23,7 @@ const getChore = async (id) => {
 //CREATE/NEW chore
 const createChore = async (choreToAdd) => {
     try {
-        const newChore = await db.one('INSERT INTO chores (chore_name, description, due_date, status, points, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *', [choreToAdd.chore_name, choreToAdd.description, choreToAdd.due_date, choreToAdd.status, choreToAdd.points, choreToAdd.created_at, choreToAdd.updated_at])
+        const newChore = await db.one('INSERT INTO chores (chore_name, description, due_date, status, points, priority, category) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *', [choreToAdd.chore_name, choreToAdd.description, choreToAdd.due_date, choreToAdd.status, choreToAdd.points, choreToAdd.priority, choreToAdd.category])
         return newChore
     } catch (error) {
         return error
@@ -43,7 +43,7 @@ const deleteChore = async (id) => {
 //UPDATE/EDIT chore
 const updateChore = async (id, chore) => {
     try {
-        const updatedChore = await db.one('UPDATE chores SET chore_name=$1, description=$2, due_date=$3, status=$4, points=$5, created_at=$6, updated_at=$7 WHERE id=$8 RETURNING *', [chore.chore_name, chore.description, chore.due_date, chore.status, chore.points, chore.created_at, chore.updated_at, id])
+        const updatedChore = await db.one('UPDATE chores SET chore_name=$1, description=$2, due_date=$3, status=$4, points=$5, priority=$6, category=$7 WHERE id=$8 RETURNING *', [chore.chore_name, chore.description, chore.due_date, chore.status, chore.points, chore.priority, chore.category, id])
         return updatedChore
     } catch (error) {
         return error
