@@ -73,7 +73,7 @@ chores.put("/:id", async (req, res) => {
       res.status(404).json({ error: "Chore not found" });
       return;
     }
-//TODO: add checkName
+    //TODO: add checkName
 
     const isModified = Object.keys(choreToUpdate).some(
       (key) => choreToUpdate[key] !== existingChore[key]
