@@ -1,5 +1,5 @@
 -- IF DATABASE EXISTS -- DROP IT
-DROP DATABASE IF EXISTS chores_dev;
+DROP DATABASE IF EXISTS chores_dev WITH (FORCE);
 
 -- Create database
 CREATE DATABASE chores_dev;

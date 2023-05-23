@@ -15,7 +15,7 @@ const cn = DATABASE_URL ? {
 };
 
 // to connect the promise to the database connection object allows us to write SQL
-const db = pgp(cn)
+const db = pgp(cn);
 
 // Now we can Query!
 
