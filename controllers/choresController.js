@@ -7,6 +7,7 @@ const {
   deleteChore,
   updateChore,
 } = require("../queries/chores");
+//const { checkName } = require('../validations/checkChore.js')
 
 //INDEX
 chores.get("/", async (req, res) => {
@@ -39,6 +40,7 @@ chores.post("/", async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 });
+//TODO: add checkName
 
 //DELETE CHORE
 chores.delete("/:id", async (req, res) => {
@@ -62,5 +64,6 @@ chores.put("/:id", async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 });
+//TODO: add checkName
 
 module.exports = chores;
