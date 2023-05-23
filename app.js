@@ -8,7 +8,7 @@ app.use(express.json());
 app.use(cors());
 
 // Routes
-app.use("/chores", choreController);
+app.use("/chores", choresController);
 
 //Default endpoint
 app.get("/", (_, res) => {
