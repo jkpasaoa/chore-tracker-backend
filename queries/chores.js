@@ -21,17 +21,6 @@ const getChore = async (id) => {
 }
 
 //CREATE/NEW chore
-// const createChore = async (choreToAdd) => {
-//   try {
-//     const { name, description, due_date, status, points, priority, category } = choreToAdd;
-//     const newChore = await db.one('INSERT INTO chores (choreToAdd.name, choreToAdd.description, choreToAdd.due_date, choreToAdd.status, choreToAdd.points, choreToAdd.priority, category) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *', [name, description, due_date, status, points, priority, category]);
-//     return newChore;
-//   } catch (error) {
-//     return error;
-//   }
-// };
-
-//CREATE/NEW chore
 const createChore = async (choreToAdd) => {
   try {
     const newChore = await db.one('INSERT INTO chores (name, description, due_date, status, points, priority, category) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *', [choreToAdd.name, choreToAdd.description, choreToAdd.due_date, choreToAdd.status, choreToAdd.points, choreToAdd.priority, choreToAdd.category]);
@@ -40,7 +29,6 @@ const createChore = async (choreToAdd) => {
     return error;
   }
 }
-
 
 //DELETE chore
 const deleteChore = async (id) => {
